@@ -1,0 +1,1325 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Motor Hive – Custom Number Plates</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap");
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --red: #e63946;
+        --gold: #f4c542;
+        --dark: #0a0a0a;
+        --surface: #111111;
+        --surface2: #1a1a1a;
+        --border: #2a2a2a;
+        --text: #f0f0f0;
+        --muted: #888;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--dark);
+        color: var(--text);
+        font-family: "Inter", sans-serif;
+        overflow-x: hidden;
+      }
+
+      /* NAV */
+      nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 4rem;
+        background: rgba(10, 10, 10, 0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+      }
+      .logo {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.8rem;
+        letter-spacing: 3px;
+        color: #fff;
+      }
+      .logo span {
+        color: var(--red);
+      }
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+      .nav-links a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: #fff;
+      }
+      .nav-cta {
+        background: var(--red);
+        color: #fff;
+        border: none;
+        padding: 0.6rem 1.4rem;
+        font-family: "Rajdhani", sans-serif;
+        font-weight: 700;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background 0.2s;
+      }
+      .nav-cta:hover {
+        background: #c1121f;
+      }
+
+      /* HERO */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding: 8rem 4rem 4rem;
+        background: radial-gradient(
+          ellipse at 70% 50%,
+          #1a0505 0%,
+          var(--dark) 60%
+        );
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      }
+      .hero-content {
+        max-width: 600px;
+        position: relative;
+        z-index: 1;
+      }
+      .hero-badge {
+        display: inline-block;
+        background: rgba(230, 57, 70, 0.15);
+        border: 1px solid rgba(230, 57, 70, 0.4);
+        color: var(--red);
+        font-size: 0.75rem;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        padding: 0.4rem 1rem;
+        border-radius: 2px;
+        margin-bottom: 1.5rem;
+      }
+      .hero h1 {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(3.5rem, 8vw, 6.5rem);
+        line-height: 0.95;
+        letter-spacing: 2px;
+        margin-bottom: 1.5rem;
+      }
+      .hero h1 em {
+        color: var(--red);
+        font-style: normal;
+      }
+      .hero p {
+        color: var(--muted);
+        line-height: 1.7;
+        font-size: 1rem;
+        margin-bottom: 2.5rem;
+        max-width: 440px;
+      }
+      .hero-btns {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .btn-primary {
+        background: var(--red);
+        color: #fff;
+        border: none;
+        padding: 0.9rem 2rem;
+        font-family: "Rajdhani", sans-serif;
+        font-weight: 700;
+        font-size: 1rem;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: all 0.2s;
+        text-decoration: none;
+        display: inline-block;
+      }
+      .btn-primary:hover {
+        background: #c1121f;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(230, 57, 70, 0.35);
+      }
+      .btn-outline {
+        background: transparent;
+        color: #fff;
+        border: 1px solid var(--border);
+        padding: 0.9rem 2rem;
+        font-family: "Rajdhani", sans-serif;
+        font-weight: 700;
+        font-size: 1rem;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: all 0.2s;
+        text-decoration: none;
+        display: inline-block;
+      }
+      .btn-outline:hover {
+        border-color: #fff;
+      }
+
+      /* PLATE DEMO floating */
+      .hero-plate {
+        position: absolute;
+        right: 6%;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: center;
+      }
+      .plate-demo {
+        border-radius: 8px;
+        padding: 1rem 2rem;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 2rem;
+        letter-spacing: 4px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s;
+        cursor: default;
+        user-select: none;
+      }
+      .plate-demo:hover {
+        transform: scale(1.05) rotate(-1deg);
+      }
+      .plate-black {
+        background: #111;
+        color: #fff;
+        border: 2px solid #333;
+      }
+      .plate-yellow {
+        background: var(--gold);
+        color: #111;
+        border: 2px solid #c9a000;
+      }
+      .plate-red {
+        background: var(--red);
+        color: #fff;
+        border: 2px solid #b02030;
+      }
+      .plate-white {
+        background: #eee;
+        color: #111;
+        border: 2px solid #ccc;
+      }
+      .plate-demo::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 60%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.08),
+          transparent
+        );
+        animation: shine 3s infinite;
+      }
+      @keyframes shine {
+        0% {
+          left: -100%;
+        }
+        100% {
+          left: 200%;
+        }
+      }
+
+      /* STATS */
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+      .stat {
+        background: var(--surface);
+        padding: 2.5rem 2rem;
+        text-align: center;
+      }
+      .stat-num {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 3rem;
+        color: var(--red);
+        line-height: 1;
+      }
+      .stat-label {
+        font-size: 0.75rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-top: 0.4rem;
+      }
+
+      /* SECTION */
+      section {
+        padding: 6rem 4rem;
+      }
+      .section-label {
+        font-size: 0.7rem;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: var(--red);
+        margin-bottom: 1rem;
+      }
+      .section-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        letter-spacing: 2px;
+        margin-bottom: 1rem;
+      }
+      .section-sub {
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        max-width: 480px;
+        margin-bottom: 3rem;
+      }
+
+      /* PLATE STYLES */
+      #styles {
+        background: var(--surface);
+      }
+      .styles-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+      }
+      .style-card {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 2rem;
+        transition:
+          border-color 0.2s,
+          transform 0.2s;
+        cursor: pointer;
+      }
+      .style-card:hover {
+        border-color: var(--red);
+        transform: translateY(-4px);
+      }
+      .style-card .plate-preview {
+        border-radius: 6px;
+        padding: 0.8rem 1.5rem;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.4rem;
+        letter-spacing: 3px;
+        margin-bottom: 1.5rem;
+        text-align: center;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      }
+      .style-card h3 {
+        font-family: "Rajdhani", sans-serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        margin-bottom: 0.4rem;
+      }
+      .style-card p {
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      .style-card .price {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.5rem;
+        color: var(--red);
+        margin-top: 1rem;
+      }
+
+      /* LIVE BUILDER */
+      #builder {
+        background: var(--dark);
+      }
+      .builder-wrap {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 4rem;
+        align-items: start;
+      }
+      .builder-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      .form-group label {
+        display: block;
+        font-size: 0.72rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 0.5rem;
+      }
+      .form-group input,
+      .form-group select {
+        width: 100%;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        color: var(--text);
+        padding: 0.8rem 1rem;
+        border-radius: 6px;
+        font-family: "Inter", sans-serif;
+        font-size: 0.9rem;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+      .form-group input:focus,
+      .form-group select:focus {
+        border-color: var(--red);
+      }
+      .form-group select option {
+        background: var(--surface);
+      }
+      .color-swatches {
+        display: flex;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+      }
+      .swatch {
+        width: 40px;
+        height: 40px;
+        border-radius: 6px;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition:
+          border-color 0.2s,
+          transform 0.15s;
+      }
+      .swatch:hover {
+        transform: scale(1.1);
+      }
+      .swatch.active {
+        border-color: #fff;
+      }
+      .icon-grid {
+        display: flex;
+        gap: 0.6rem;
+        flex-wrap: wrap;
+      }
+      .icon-btn {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 0.5rem 0.8rem;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: border-color 0.2s;
+      }
+      .icon-btn:hover,
+      .icon-btn.active {
+        border-color: var(--red);
+      }
+
+      /* Live preview */
+      .builder-preview {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+      }
+      .preview-stage {
+        width: 100%;
+        aspect-ratio: 2/1;
+        background: #0d0d0d;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .preview-stage::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse at center,
+          #1a1a1a 0%,
+          #0a0a0a 100%
+        );
+      }
+      #liveplate {
+        position: relative;
+        z-index: 1;
+        border-radius: 10px;
+        padding: 1rem 2.5rem;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 2.5rem;
+        letter-spacing: 5px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        transition: all 0.3s;
+      }
+      .preview-note {
+        font-size: 0.78rem;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      /* GALLERY */
+      #gallery {
+        background: var(--surface);
+      }
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+      }
+      .gal-item {
+        aspect-ratio: 4/3;
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+        cursor: pointer;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .gal-plate {
+        border-radius: 8px;
+        padding: 0.9rem 1.8rem;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.3rem;
+        letter-spacing: 3px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        transition: transform 0.3s;
+      }
+      .gal-item:hover .gal-plate {
+        transform: scale(1.08) rotate(-2deg);
+      }
+      .gal-item::after {
+        content: "VIEW";
+        position: absolute;
+        inset: 0;
+        background: rgba(230, 57, 70, 0);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.5rem;
+        letter-spacing: 3px;
+        opacity: 0;
+        transition: all 0.3s;
+      }
+      .gal-item:hover::after {
+        background: rgba(230, 57, 70, 0.15);
+        opacity: 1;
+      }
+
+      /* ORDER */
+      #order {
+        background: var(--dark);
+      }
+      .order-wrap {
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: 4rem;
+      }
+      .order-info h3 {
+        font-family: "Rajdhani", sans-serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        margin-bottom: 0.8rem;
+        color: var(--red);
+      }
+      .order-info ul {
+        list-style: none;
+      }
+      .order-info ul li {
+        padding: 0.7rem 0;
+        border-bottom: 1px solid var(--border);
+        font-size: 0.88rem;
+        color: var(--muted);
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+      }
+      .order-info ul li::before {
+        content: "→";
+        color: var(--red);
+      }
+      .order-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+      }
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      .order-form input,
+      .order-form select,
+      .order-form textarea {
+        width: 100%;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        color: var(--text);
+        padding: 0.9rem 1rem;
+        border-radius: 6px;
+        font-family: "Inter", sans-serif;
+        font-size: 0.9rem;
+        outline: none;
+        transition: border-color 0.2s;
+        resize: vertical;
+      }
+      .order-form input:focus,
+      .order-form select:focus,
+      .order-form textarea:focus {
+        border-color: var(--red);
+      }
+      .submit-btn {
+        background: var(--red);
+        color: #fff;
+        border: none;
+        padding: 1rem 2rem;
+        font-family: "Rajdhani", sans-serif;
+        font-weight: 700;
+        font-size: 1.1rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        cursor: pointer;
+        border-radius: 6px;
+        transition: all 0.2s;
+        width: 100%;
+      }
+      .submit-btn:hover {
+        background: #c1121f;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(230, 57, 70, 0.4);
+      }
+
+      /* FOOTER */
+      footer {
+        background: var(--surface);
+        border-top: 1px solid var(--border);
+        padding: 3rem 4rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .footer-logo {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.5rem;
+        letter-spacing: 3px;
+      }
+      .footer-logo span {
+        color: var(--red);
+      }
+      .footer-links {
+        display: flex;
+        gap: 1.5rem;
+      }
+      .footer-links a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.82rem;
+        transition: color 0.2s;
+      }
+      .footer-links a:hover {
+        color: #fff;
+      }
+      .footer-copy {
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+
+      /* Toast */
+      .toast {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        z-index: 999;
+        background: #111;
+        border: 1px solid var(--red);
+        color: #fff;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        font-size: 0.88rem;
+        transform: translateY(100px);
+        opacity: 0;
+        transition: all 0.4s;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+      }
+      .toast.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      .toast strong {
+        color: var(--red);
+      }
+
+      @media (max-width: 900px) {
+        nav {
+          padding: 1rem 1.5rem;
+        }
+        .nav-links {
+          display: none;
+        }
+        section {
+          padding: 4rem 1.5rem;
+        }
+        .hero {
+          padding: 7rem 1.5rem 4rem;
+        }
+        .hero-plate {
+          display: none;
+        }
+        .builder-wrap,
+        .order-wrap {
+          grid-template-columns: 1fr;
+        }
+        .gallery-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .stats {
+          grid-template-columns: 1fr 1fr;
+        }
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+        footer {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav>
+      <div class="logo">MOTOR<span>HIVE</span></div>
+      <ul class="nav-links">
+        <li><a href="#styles">Styles</a></li>
+        <li><a href="#builder">Builder</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#order">Order</a></li>
+      </ul>
+      <button
+        class="nav-cta"
+        onclick="
+          document
+            .getElementById('order')
+            .scrollIntoView({ behavior: 'smooth' })
+        "
+      >
+        Order Now
+      </button>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-badge">🔥 Bangladesh's #1 Custom Plate Studio</div>
+        <h1>YOUR PLATE.<br />YOUR <em>IDENTITY.</em></h1>
+        <p>
+          From sleek matte blacks to bold yellow vanity plates — we craft
+          premium custom number plates that make your car impossible to ignore.
+        </p>
+        <div class="hero-btns">
+          <a href="#builder" class="btn-primary">Design Your Plate</a>
+          <a href="#gallery" class="btn-outline">View Gallery</a>
+        </div>
+      </div>
+      <div class="hero-plate">
+        <div class="plate-demo plate-black">Y50B</div>
+        <div class="plate-demo plate-yellow">★ SY3D S4LMUN ★</div>
+        <div class="plate-demo plate-black" style="font-size: 1.4rem">
+          🐉 EKRAM1NZEE
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">2K+</div>
+        <div class="stat-label">Plates Made</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">48H</div>
+        <div class="stat-label">Turnaround</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">12+</div>
+        <div class="stat-label">Plate Styles</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Satisfaction</div>
+      </div>
+    </div>
+
+    <!-- STYLES -->
+    <section id="styles">
+      <div class="section-label">Collections</div>
+      <h2 class="section-title">CHOOSE YOUR STYLE</h2>
+      <p class="section-sub">
+        Every plate is precision-cut, UV resistant, and built to last. Pick a
+        style that speaks your language.
+      </p>
+      <div class="styles-grid">
+        <div class="style-card">
+          <div class="plate-preview plate-black">PHANTOM</div>
+          <h3>STEALTH BLACK</h3>
+          <p>
+            Matte or gloss black with white lettering. The dark knight of custom
+            plates — subtle yet aggressive.
+          </p>
+          <div class="price">৳ 1,800</div>
+        </div>
+        <div class="style-card">
+          <div class="plate-preview plate-yellow">★ V4N1TY ★</div>
+          <h3>VANITY YELLOW</h3>
+          <p>
+            Bold yellow backgrounds with custom star icons and black lettering.
+            Maximum street presence guaranteed.
+          </p>
+          <div class="price">৳ 1,600</div>
+        </div>
+        <div class="style-card">
+          <div class="plate-preview plate-red">FIREHAWK</div>
+          <h3>BLOOD RED</h3>
+          <p>
+            Crimson red finish with white or black lettering. Turn heads at
+            every junction.
+          </p>
+          <div class="price">৳ 1,800</div>
+        </div>
+        <div class="style-card">
+          <div class="plate-preview plate-white">GHOST</div>
+          <h3>CLEAN WHITE</h3>
+          <p>
+            Clean slate white with custom text and icons. A classic canvas for
+            your personal statement.
+          </p>
+          <div class="price">৳ 1,400</div>
+        </div>
+        <div class="style-card">
+          <div
+            class="plate-preview"
+            style="
+              background: linear-gradient(135deg, #1a1a2e, #16213e);
+              color: #a78bfa;
+              border: 2px solid #4c1d95;
+              letter-spacing: 3px;
+            "
+          >
+            🐉 NEON
+          </div>
+          <h3>NEON DARK</h3>
+          <p>
+            Dark base with glowing neon-effect lettering and custom dragon,
+            flame, or logo icons.
+          </p>
+          <div class="price">৳ 2,200</div>
+        </div>
+        <div class="style-card">
+          <div
+            class="plate-preview"
+            style="
+              background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+              color: #f0f0f0;
+              border: 2px solid #444;
+              font-size: 1.1rem;
+            "
+          >
+            🇧🇩 × CUSTOM
+          </div>
+          <h3>PATRIOT EDITION</h3>
+          <p>
+            Bangladesh flag accents with your personal text. Show love for your
+            country on every drive.
+          </p>
+          <div class="price">৳ 2,000</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIVE BUILDER -->
+    <section id="builder">
+      <div class="section-label">Live Preview</div>
+      <h2 class="section-title">BUILD YOUR PLATE</h2>
+      <p class="section-sub">
+        Customize in real-time and see exactly what you'll get before ordering.
+      </p>
+      <div class="builder-wrap">
+        <div class="builder-controls">
+          <div class="form-group">
+            <label>Plate Text</label>
+            <input
+              type="text"
+              id="plateText"
+              maxlength="14"
+              placeholder="e.g. SY3D S4LMUN"
+              oninput="updatePlate()"
+            />
+          </div>
+          <div class="form-group">
+            <label>Subtitle / Tag (optional)</label>
+            <input
+              type="text"
+              id="plateSub"
+              maxlength="16"
+              placeholder="e.g. PUSPITA ❤️"
+              oninput="updatePlate()"
+            />
+          </div>
+          <div class="form-group">
+            <label>Plate Color</label>
+            <div class="color-swatches">
+              <div
+                class="swatch active"
+                style="background: #111; border-color: #333"
+                data-bg="#111"
+                data-color="#fff"
+                onclick="setColor(this)"
+              ></div>
+              <div
+                class="swatch"
+                style="background: #f4c542"
+                data-bg="#f4c542"
+                data-color="#111"
+                onclick="setColor(this)"
+              ></div>
+              <div
+                class="swatch"
+                style="background: #e63946"
+                data-bg="#e63946"
+                data-color="#fff"
+                onclick="setColor(this)"
+              ></div>
+              <div
+                class="swatch"
+                style="background: #eee"
+                data-bg="#eee"
+                data-color="#111"
+                onclick="setColor(this)"
+              ></div>
+              <div
+                class="swatch"
+                style="background: linear-gradient(135deg, #1a1a2e, #302b63)"
+                data-bg="linear-gradient(135deg,#1a1a2e,#302b63)"
+                data-color="#a78bfa"
+                onclick="setColor(this)"
+              ></div>
+              <div
+                class="swatch"
+                style="background: #0a2540"
+                data-bg="#0a2540"
+                data-color="#60cdff"
+                onclick="setColor(this)"
+              ></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Icon</label>
+            <div class="icon-grid">
+              <button
+                class="icon-btn active"
+                data-icon=""
+                onclick="setIcon(this)"
+              >
+                None
+              </button>
+              <button class="icon-btn" data-icon="🐉" onclick="setIcon(this)">
+                🐉
+              </button>
+              <button class="icon-btn" data-icon="★" onclick="setIcon(this)">
+                ★
+              </button>
+              <button class="icon-btn" data-icon="🔥" onclick="setIcon(this)">
+                🔥
+              </button>
+              <button class="icon-btn" data-icon="⚡" onclick="setIcon(this)">
+                ⚡
+              </button>
+              <button class="icon-btn" data-icon="🇧🇩" onclick="setIcon(this)">
+                🇧🇩
+              </button>
+              <button class="icon-btn" data-icon="💀" onclick="setIcon(this)">
+                💀
+              </button>
+              <button class="icon-btn" data-icon="🦅" onclick="setIcon(this)">
+                🦅
+              </button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Border Style</label>
+            <select id="borderStyle" onchange="updatePlate()">
+              <option value="2px solid #333">Subtle Dark</option>
+              <option value="2px solid #666">Silver Edge</option>
+              <option value="3px solid #e63946">Red Chrome</option>
+              <option value="3px solid #f4c542">Gold Edge</option>
+              <option value="none">Borderless</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="builder-preview">
+          <div class="preview-stage">
+            <div
+              id="liveplate"
+              style="
+                background: #111;
+                color: #fff;
+                border: 2px solid #333;
+                flex-direction: column;
+                gap: 0.2rem;
+              "
+            >
+              <div
+                id="plateicon"
+                style="font-size: 1.5rem; line-height: 1"
+              ></div>
+              <div id="platetext" style="line-height: 1">YOUR PLATE</div>
+              <div
+                id="platesub"
+                style="
+                  font-size: 0.9rem;
+                  letter-spacing: 3px;
+                  opacity: 0.7;
+                  font-family: &quot;Inter&quot;, sans-serif;
+                  font-weight: 500;
+                "
+              ></div>
+            </div>
+          </div>
+          <p class="preview-note">
+            ⬆ Live preview updates as you type. Actual plate may vary slightly.
+          </p>
+          <button class="btn-primary" onclick="orderThis()">
+            Order This Design →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery">
+      <div class="section-label">Showcase</div>
+      <h2 class="section-title">CUSTOMER PLATES</h2>
+      <p class="section-sub">
+        Real plates we've made for the real ones. Every one is a story.
+      </p>
+      <div class="gallery-grid">
+        <div class="gal-item">
+          <div class="gal-plate plate-black" style="font-size: 1.5rem">
+            Y50B
+          </div>
+        </div>
+        <div class="gal-item">
+          <div class="gal-plate plate-yellow" style="font-size: 1.1rem">
+            ★ SY3D S4LMUN ★
+          </div>
+        </div>
+        <div class="gal-item">
+          <div
+            class="gal-plate"
+            style="
+              background: #111;
+              color: #fff;
+              border: 2px solid #333;
+              font-family: &quot;Bebas Neue&quot;, sans-serif;
+              letter-spacing: 3px;
+              border-radius: 8px;
+              padding: 0.9rem 1.8rem;
+            "
+          >
+            🐉 EKRAM1NZEE
+          </div>
+        </div>
+        <div class="gal-item">
+          <div
+            class="gal-plate"
+            style="
+              background: linear-gradient(135deg, #1a1a2e, #302b63);
+              color: #a78bfa;
+              border: 2px solid #4c1d95;
+              font-family: &quot;Bebas Neue&quot;, sans-serif;
+              letter-spacing: 3px;
+              border-radius: 8px;
+              padding: 0.9rem 1.8rem;
+            "
+          >
+            ⚡ THUNDER07
+          </div>
+        </div>
+        <div class="gal-item">
+          <div class="gal-plate plate-red" style="font-size: 1.3rem">
+            🔥 FIREHAWK
+          </div>
+        </div>
+        <div class="gal-item">
+          <div
+            class="gal-plate"
+            style="
+              background: #0a2540;
+              color: #60cdff;
+              border: 2px solid #1a4a70;
+              font-family: &quot;Bebas Neue&quot;, sans-serif;
+              letter-spacing: 3px;
+              border-radius: 8px;
+              padding: 0.9rem 1.8rem;
+            "
+          >
+            🇧🇩 DHAKA PRIDE
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ORDER -->
+    <section id="order">
+      <div class="section-label">Place Your Order</div>
+      <h2 class="section-title">GET YOUR PLATE</h2>
+      <div class="order-wrap">
+        <div class="order-info">
+          <h3>How It Works</h3>
+          <ul>
+            <li>Fill the form with your plate details</li>
+            <li>We WhatsApp you a design mockup within 2 hours</li>
+            <li>Approve the design & confirm payment</li>
+            <li>Plate shipped or picked up within 48 hours</li>
+            <li>Free revisions until you love it</li>
+          </ul>
+          <br />
+          <h3>Payment & Delivery</h3>
+          <ul>
+            <li>bKash, Nagad, bank transfer accepted</li>
+            <li>Nationwide delivery via Pathao / SA Paribahan</li>
+            <li>Dhaka same-day pickup available</li>
+            <li>Bulk orders (3+) get 15% discount</li>
+          </ul>
+          <br />
+          <h3>Contact Us</h3>
+          <ul>
+            <li>WhatsApp: +880 1XXX-XXXXXX</li>
+            <li>Instagram: @motorhive.bd</li>
+            <li>Facebook: Motor Hive BD</li>
+          </ul>
+        </div>
+        <form class="order-form" onsubmit="submitOrder(event)">
+          <div class="form-row">
+            <input type="text" placeholder="Your Name *" required />
+            <input type="tel" placeholder="WhatsApp Number *" required />
+          </div>
+          <div class="form-row">
+            <select required>
+              <option value="">-- Select Plate Style --</option>
+              <option>Stealth Black – ৳1,800</option>
+              <option>Vanity Yellow – ৳1,600</option>
+              <option>Blood Red – ৳1,800</option>
+              <option>Clean White – ৳1,400</option>
+              <option>Neon Dark – ৳2,200</option>
+              <option>Patriot Edition – ৳2,000</option>
+            </select>
+            <select>
+              <option value="">-- Select Icon --</option>
+              <option>None</option>
+              <option>Dragon 🐉</option>
+              <option>Star ★</option>
+              <option>Fire 🔥</option>
+              <option>Lightning ⚡</option>
+              <option>Bangladesh Flag 🇧🇩</option>
+              <option>Skull 💀</option>
+              <option>Eagle 🦅</option>
+              <option>Custom (mention below)</option>
+            </select>
+          </div>
+          <input
+            type="text"
+            placeholder="Plate Text * (e.g. SY3D S4LMUN)"
+            required
+            maxlength="20"
+          />
+          <input
+            type="text"
+            placeholder="Subtitle / Tagline (optional, e.g. PUSPITA ❤️)"
+            maxlength="20"
+          />
+          <div class="form-row">
+            <select>
+              <option value="">-- Quantity --</option>
+              <option>1 Plate</option>
+              <option>2 Plates (Front + Rear)</option>
+              <option>3+ Plates (Bulk)</option>
+            </select>
+            <select>
+              <option value="">-- Delivery Method --</option>
+              <option>Dhaka Pickup</option>
+              <option>Pathao Courier</option>
+              <option>SA Paribahan</option>
+            </select>
+          </div>
+          <textarea
+            rows="3"
+            placeholder="Additional notes, special instructions, reference images..."
+          ></textarea>
+          <button type="submit" class="submit-btn">🔥 Submit Order</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-logo">MOTOR<span>HIVE</span></div>
+      <div class="footer-links">
+        <a href="#styles">Styles</a>
+        <a href="#builder">Builder</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#order">Order</a>
+      </div>
+      <div class="footer-copy">© 2025 Motor Hive BD. All rights reserved.</div>
+    </footer>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+      let currentBg = "#111",
+        currentColor = "#fff",
+        currentIcon = "";
+
+      function updatePlate() {
+        const text =
+          document.getElementById("plateText").value.toUpperCase() ||
+          "YOUR PLATE";
+        const sub = document.getElementById("plateSub").value;
+        const border = document.getElementById("borderStyle").value;
+        const plate = document.getElementById("liveplate");
+        document.getElementById("platetext").textContent = text;
+        document.getElementById("platesub").textContent = sub;
+        document.getElementById("plateicon").textContent = currentIcon;
+        plate.style.background = currentBg;
+        plate.style.color = currentColor;
+        plate.style.border = border;
+        const hasContent = currentIcon || sub;
+        plate.style.flexDirection = hasContent ? "column" : "row";
+      }
+
+      function setColor(el) {
+        document
+          .querySelectorAll(".swatch")
+          .forEach((s) => s.classList.remove("active"));
+        el.classList.add("active");
+        currentBg = el.dataset.bg;
+        currentColor = el.dataset.color;
+        updatePlate();
+      }
+
+      function setIcon(el) {
+        document
+          .querySelectorAll(".icon-btn")
+          .forEach((b) => b.classList.remove("active"));
+        el.classList.add("active");
+        currentIcon = el.dataset.icon;
+        updatePlate();
+      }
+
+      function orderThis() {
+        document.getElementById("order").scrollIntoView({ behavior: "smooth" });
+        const text = document.getElementById("plateText").value;
+        if (text) {
+          setTimeout(() => {
+            const input = document.querySelector(
+              '#order input[placeholder*="Plate Text"]',
+            );
+            if (input) {
+              input.value = text;
+              input.focus();
+            }
+          }, 600);
+        }
+      }
+
+      function submitOrder(e) {
+        e.preventDefault();
+        showToast(
+          "<strong>Order Received!</strong> We'll WhatsApp you a mockup within 2 hours. 🔥",
+        );
+        e.target.reset();
+      }
+
+      function showToast(msg) {
+        const t = document.getElementById("toast");
+        t.innerHTML = msg;
+        t.classList.add("show");
+        setTimeout(() => t.classList.remove("show"), 4000);
+      }
+
+      // Scroll reveal
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.style.opacity = 1;
+              e.target.style.transform = "translateY(0)";
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+      document
+        .querySelectorAll(".style-card, .gal-item, .stat")
+        .forEach((el) => {
+          el.style.opacity = 0;
+          el.style.transform = "translateY(20px)";
+          el.style.transition = "opacity .5s, transform .5s";
+          observer.observe(el);
+        });
+    </script>
+  </body>
+</html>
